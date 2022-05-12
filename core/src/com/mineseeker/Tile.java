@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -81,7 +79,7 @@ public class Tile {
                         mouseY >= tileY &&
                         mouseY <= tileY + tile.getHeight())) {
             revealed = true;
-            if (getBomb())
+            if (isBomb())
                 setRevealedTex(new Texture ("BombTileExploded.PNG"));
 
             debugTile();
@@ -100,7 +98,7 @@ public class Tile {
         setRevealedTex(new Texture("BombTile.PNG"));
     }
 
-    public boolean getBomb() {
+    public boolean isBomb() {
         return isBomb;
     }
 
