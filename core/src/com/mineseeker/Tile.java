@@ -4,21 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Tile {
     private static int TEX_SIZE = 128;
-    private boolean flagged;
+    private boolean flagged = false;
     private boolean revealed;
     private boolean isBomb;
     private int bombsAroundCount;
     OrthographicCamera camera;
     Texture overlayTex;
+    Texture flaggedTex;
     Texture revealedTex;
+    Texture bombTex;
     private SpriteBatch tileSprite;
     private Rectangle tile;
     Sprite testSprite;
@@ -27,6 +27,8 @@ public class Tile {
         tile = new Rectangle(x, y, width, height);
 
         overlayTex = new Texture("DefaultTile.PNG");
+        flaggedTex = new Texture("FlagTile.PNG");
+        bombTex = new Texture("BombTile.PNG");
         revealedTex = tex;
         testSprite = new Sprite(overlayTex);
         tileSprite = new SpriteBatch();
@@ -52,29 +54,59 @@ public class Tile {
         testSprite.draw(tileSprite);
         if (revealed) {
             testSprite.setTexture(revealedTex);
-        } else testSprite.setTexture(overlayTex);
+        } else if (flagged) {
+            testSprite.setTexture(flaggedTex);
+        }
+        else testSprite.setTexture(overlayTex);
         //tileSprite.draw(overlayTex, tile.x, tile.y);
 
         tileSprite.end();
         checkClicked();
     }
 
+
+
     public void checkClicked() {
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && (Gdx.input.getX() >= tile.getX() && Gdx.input.getX() <= tile.getX() + tile.getWidth() && Gdx.input.getY() >= tile.getY() && Gdx.input.getY() <= tile.getY() + tile.getHeight())) {
+        int mouseX = Gdx.input.getX();
+        int mouseY = Gdx.input.getY();
+
+        float tileX = tile.getX();
+        float tileY = tile.getY();
+
+        if (flagged == false && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) &&
+                (mouseX >= tileX &&
+                        mouseX <= tileX + tile.getWidth() &&
+                        mouseY >= tileY &&
+                        mouseY <= tileY + tile.getHeight())) {
             revealed = true;
+            if (isBomb())
+                setRevealedTex(new Texture ("BombTileExploded.PNG"));
+
             debugTile();
         }
-        if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) revealed = false;
-    }
 
-    public boolean isBomb() {
-        return isBomb;
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT) &&
+                (mouseX >= tileX &&
+                        mouseX <= tileX + tile.getWidth() &&
+                        mouseY >= tileY &&
+                        mouseY <= tileY + tile.getHeight()))
+        flagged = !flagged;
     }
 
     public void setBomb(boolean bomb) {
         isBomb = bomb;
         setRevealedTex(new Texture("BombTile.PNG"));
     }
+
+    public boolean isBomb() {
+        return isBomb;
+    }
+
+//    public void RevealBombs() {
+//        GameBoard board = new GameBoard();
+//        if (Gdx.input.isButtonJustPressed(Input.Keys.B))
+//            board.RevealBombs();
+//    }
 
     public int getBombsAroundCount() {
         return bombsAroundCount;
