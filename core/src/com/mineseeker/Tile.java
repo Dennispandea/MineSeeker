@@ -81,7 +81,7 @@ public class Tile {
                         mouseY >= tileY &&
                         mouseY <= tileY + tile.getHeight())) {
             revealed = true;
-            if (getBomb())
+            if (isBomb)
                 setRevealedTex(new Texture ("BombTileExploded.PNG"));
 
             debugTile();
