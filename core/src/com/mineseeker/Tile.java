@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Tile {
     private static int TEX_SIZE = 128;
-    private boolean flagged;
+    private boolean flagged = false;
     private boolean revealed;
     private boolean isBomb;
     private int bombsAroundCount;
@@ -20,6 +20,7 @@ public class Tile {
     Texture overlayTex;
     Texture flaggedTex;
     Texture revealedTex;
+    Texture bombTex;
     private SpriteBatch tileSprite;
     private Rectangle tile;
     Sprite testSprite;
@@ -29,6 +30,7 @@ public class Tile {
 
         overlayTex = new Texture("DefaultTile.PNG");
         flaggedTex = new Texture("FlagTile.PNG");
+        bombTex = new Texture("BombTile.PNG");
         revealedTex = tex;
         testSprite = new Sprite(overlayTex);
         tileSprite = new SpriteBatch();
@@ -64,32 +66,49 @@ public class Tile {
         checkClicked();
     }
 
-    public void RevealBombs() {
-        if (isBomb)
-        revealed = true;
-    }
+
 
     public void checkClicked() {
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) &&
-                (Gdx.input.getX() >= tile.getX() &&
-                        Gdx.input.getX() <= tile.getX() + tile.getWidth() &&
-                        Gdx.input.getY() >= tile.getY() &&
-                        Gdx.input.getY() <= tile.getY() + tile.getHeight())) {
+        int mouseX = Gdx.input.getX();
+        int mouseY = Gdx.input.getY();
+
+        float tileX = tile.getX();
+        float tileY = tile.getY();
+
+        if (flagged == false && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) &&
+                (mouseX >= tileX &&
+                        mouseX <= tileX + tile.getWidth() &&
+                        mouseY >= tileY &&
+                        mouseY <= tileY + tile.getHeight())) {
             revealed = true;
+            if (getBomb())
+                setRevealedTex(new Texture ("BombTileExploded.PNG"));
+
             debugTile();
         }
+
         if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT) &&
-                (Gdx.input.getX() >= tile.getX() &&
-                        Gdx.input.getX() <= tile.getX() + tile.getWidth() &&
-                        Gdx.input.getY() >= tile.getY() &&
-                        Gdx.input.getY() <= tile.getY() + tile.getHeight()))
-            flagged = true;
+                (mouseX >= tileX &&
+                        mouseX <= tileX + tile.getWidth() &&
+                        mouseY >= tileY &&
+                        mouseY <= tileY + tile.getHeight()))
+        flagged = !flagged;
     }
 
     public void setBomb(boolean bomb) {
         isBomb = bomb;
         setRevealedTex(new Texture("BombTile.PNG"));
     }
+
+    public boolean getBomb() {
+        return isBomb;
+    }
+
+//    public void RevealBombs() {
+//        GameBoard board = new GameBoard();
+//        if (Gdx.input.isButtonJustPressed(Input.Keys.B))
+//            board.RevealBombs();
+//    }
 
     public int getBombsAroundCount() {
         return bombsAroundCount;
