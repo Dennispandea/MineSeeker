@@ -103,6 +103,9 @@ public class Tile {
     public void revealIfBomb() {
         if (isBomb) revealed = true;
     }
+    public void reveal(){
+        revealed=true;
+    }
 
     public int getBombsAroundCount() {
         return bombsAroundCount;
