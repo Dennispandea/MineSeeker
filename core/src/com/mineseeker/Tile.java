@@ -56,14 +56,12 @@ public class Tile {
             testSprite.setTexture(revealedTex);
         } else if (flagged) {
             testSprite.setTexture(flaggedTex);
-        }
-        else testSprite.setTexture(overlayTex);
+        } else testSprite.setTexture(overlayTex);
         //tileSprite.draw(overlayTex, tile.x, tile.y);
 
         tileSprite.end();
         checkClicked();
     }
-
 
 
     public void checkClicked() {
@@ -80,7 +78,7 @@ public class Tile {
                         mouseY <= tileY + tile.getHeight())) {
             revealed = true;
             if (isBomb())
-                setRevealedTex(new Texture ("BombTileExploded.PNG"));
+                setRevealedTex(new Texture("BombTileExploded.PNG"));
 
             debugTile();
         }
@@ -90,7 +88,7 @@ public class Tile {
                         mouseX <= tileX + tile.getWidth() &&
                         mouseY >= tileY &&
                         mouseY <= tileY + tile.getHeight()))
-        flagged = !flagged;
+            flagged = !flagged;
     }
 
     public void setBomb(boolean bomb) {
@@ -102,11 +100,9 @@ public class Tile {
         return isBomb;
     }
 
-//    public void RevealBombs() {
-//        GameBoard board = new GameBoard();
-//        if (Gdx.input.isButtonJustPressed(Input.Keys.B))
-//            board.RevealBombs();
-//    }
+    public void revealIfBomb() {
+        if (isBomb) revealed = true;
+    }
 
     public int getBombsAroundCount() {
         return bombsAroundCount;

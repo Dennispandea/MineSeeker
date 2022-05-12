@@ -101,19 +101,15 @@ public class GameBoard extends Game {
         t.run();
     }
 
-//    public void RevealBombs() {
-//        for (int i = 0; i < width; i++) {
-//            for (int j = 0; j < height; j++) {
-//                tiles[i][j].getBomb();
-//            }
-//        }
-//    }
 
     @Override
     public void render() {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 tiles[i][j].draw();
+                if (Gdx.input.isKeyPressed(Input.Keys.B)) {
+                tiles[i][j].revealIfBomb();
+                }
             }
         }
         super.render();
