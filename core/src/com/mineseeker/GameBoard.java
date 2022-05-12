@@ -1,6 +1,8 @@
 package com.mineseeker;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 
@@ -34,6 +36,8 @@ public class GameBoard extends Game {
         tHeight = (float) pixelWidth / (float) width;
         tWidth = (float) pixelWidth / (float) width;
     }
+
+
 
     @Override
     public void create() {
