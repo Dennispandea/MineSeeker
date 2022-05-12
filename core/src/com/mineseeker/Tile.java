@@ -40,7 +40,7 @@ public class Tile {
     }
 
     public void draw() {
-        testSprite.setScale(tile.width * 2 / TEX_SIZE);
+        testSprite.setScale(tile.width / TEX_SIZE);
 //        testSprite.setX(tile.x);
 //        testSprite.setY(tile.y);
 
@@ -58,9 +58,11 @@ public class Tile {
     }
 
     public void checkClicked() {
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)
-                && (Gdx.input.getX() >= tile.getX() && Gdx.input.getX() <= tile.getX() + tile.getWidth()
-                && Gdx.input.getY() >= tile.getY() && Gdx.input.getY() <= tile.getY() + tile.getHeight())
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) &&
+                (Gdx.input.getX() >= tile.getX() &&
+                        Gdx.input.getX() <= tile.getX() + tile.getWidth()
+                && Gdx.input.getY() >= tile.getY() &&
+                        Gdx.input.getY() <= tile.getY() + tile.getHeight())
         ) {
             revealed = true;
         }

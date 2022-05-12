@@ -28,7 +28,6 @@ public class GameBoard extends Game {
         pixelHeight = MineSeeker.HEIGHT - 200;
         this.minesCount = minesCount;
         this.camera = camera;
-//        tiles = new Tile[width * height];
         tiles = new Tile[width][height];
         tHeight = (float) pixelWidth / (float) width;
         tWidth = (float) pixelWidth / (float) width;
@@ -36,25 +35,14 @@ public class GameBoard extends Game {
 
     @Override
     public void create() {
-        int tileXPos = 0;
-        int tileYPos = 0;
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                tiles[i][j] = new Tile(tHeight / 2, tWidth / 2, i * tWidth, j * tHeight, new Texture("BombTileExploded.PNG"), camera);
-            }
-            if (tileXPos <= width) {
-                tileXPos++;
-            }
-            if (tileXPos == width) {
-                tileXPos = 0;
-                tileYPos++;
+                tiles[i][j] = new Tile(tHeight, tWidth, i * tWidth, j * tHeight, new Texture("BombTileExploded.PNG"), camera);
             }
         }
     }
-
     @Override
     public void render() {
-//tiles[0].draw();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 tiles[i][j].draw();
