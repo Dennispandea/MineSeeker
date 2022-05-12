@@ -35,11 +35,18 @@ public class GameBoard extends Game {
 
     @Override
     public void create() {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 tiles[i][j] = new Tile(tHeight, tWidth, i * tWidth, j * tHeight, new Texture("BombTileExploded.PNG"), camera);
             }
         }
+
+            }
+        });
+        t.run();
     }
     @Override
     public void render() {

@@ -4,11 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-
-import java.awt.event.MouseEvent;
 
 public class Tile {
     private static int TEX_SIZE = 128;
@@ -16,6 +16,7 @@ public class Tile {
     private boolean revealed;
     private boolean isBomb;
     private int bombsAroundCount;
+    OrthographicCamera camera;
     Texture overlayTex;
     Texture revealedTex;
     private SpriteBatch tileSprite;
@@ -32,10 +33,10 @@ public class Tile {
         testSprite.setOrigin(TEX_SIZE, TEX_SIZE);
         tileSprite.setProjectionMatrix(camera.combined);
         testSprite.flip(false, true);
-        initTex();
+        this.camera=camera;
     }
 
-    private void initTex() {
+    private void debug() {
 
     }
 
@@ -55,13 +56,14 @@ public class Tile {
 
         tileSprite.end();
         checkClicked();
+
     }
 
     public void checkClicked() {
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) &&
                 (Gdx.input.getX() >= tile.getX() &&
                         Gdx.input.getX() <= tile.getX() + tile.getWidth()
-                && Gdx.input.getY() >= tile.getY() &&
+                        && Gdx.input.getY() >= tile.getY() &&
                         Gdx.input.getY() <= tile.getY() + tile.getHeight())
         ) {
             revealed = true;
