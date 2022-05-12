@@ -45,15 +45,50 @@ public class GameBoard extends Game {
                         tiles[i][j] = new Tile(tHeight, tWidth, i * tWidth, j * tHeight, new Texture("EmptyTile.PNG"), camera);
                     }
                 }
-                while (minesLeft > 0) {
+                while (minesLeft > 0) { //keep running until all the bombs are set
                     for (int i = 0; i < width; i++) {
                         for (int j = 0; j < height; j++) {
-                            if (random.nextInt(100) <= 5) {
-                                tiles[i][j].setBomb(true);
-                                minesLeft--;
-                            }
+                            if (!tiles[i][j].isBomb())
+                                if (random.nextInt(100) <= 5) {
+                                    tiles[i][j].setBomb(true);
+                                    minesLeft--;
+                                }
                             if (minesLeft == 0) break;
                         }
+                    }
+                }
+                for (int i = 0; i < width; i++) {
+                    for (int j = 0; j < height; j++) {
+                        int bombCount = 0;
+                        if (i > 0) {
+                            if (tiles[i - 1][j].isBomb()) bombCount++;
+                            if (j < height - 1) {
+                                if (tiles[i - 1][j + 1].isBomb()) bombCount++;
+                            }
+                        }
+                        if (j > 0) {
+                            if (tiles[i][j - 1].isBomb()) bombCount++;
+                            if (i < width - 1) {
+                                if (tiles[i + 1][j - 1].isBomb()) bombCount++;
+                            }
+                        }
+                        if (j > 0 && i > 0) {
+                            if (tiles[i - 1][j - 1].isBomb()) bombCount++;
+                        }
+
+                        if (i < width - 1) {
+                            if (tiles[i + 1][j].isBomb()) bombCount++;
+                        }
+
+                        if (j < height - 1) {
+                            if (tiles[i][j + 1].isBomb()) bombCount++;
+                        }
+
+                        if (i < width - 1 && j < height - 1) {
+                            if (tiles[i + 1][j + 1].isBomb()) bombCount++;
+                        }
+
+                        tiles[i][j].setBombsAroundCount(bombCount);
                     }
                 }
 
