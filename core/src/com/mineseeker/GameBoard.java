@@ -17,7 +17,7 @@ public class GameBoard extends Game {
     int minesCount, minesLeft;
     float tHeight, tWidth;
     Random random = new Random();
-    Tile tiles[][];
+    Tile[][] tiles;
     OrthographicCamera camera;
 
     public GameBoard(int width, int height, int minesCount, OrthographicCamera camera) {
@@ -48,16 +48,15 @@ public class GameBoard extends Game {
                 while (minesLeft > 0) { //keep running until all the bombs are set
                     for (int i = 0; i < width; i++) {
                         for (int j = 0; j < height; j++) {
-                            if (!tiles[i][j].isBomb())
-                                if (random.nextInt(100) <= 5) {
-                                    tiles[i][j].setBomb(true);
-                                    minesLeft--;
-                                }
+                            if (!tiles[i][j].isBomb()) if (random.nextInt(100) <= 5) {
+                                tiles[i][j].setBomb(true);
+                                minesLeft--;
+                            }
                             if (minesLeft == 0) break;
                         }
                     }
                 }
-                for (int i = 0; i < width; i++) {
+                for (int i = 0; i < width; i++) { //check all bombs
                     for (int j = 0; j < height; j++) {
                         int bombCount = 0;
                         if (i > 0) {
@@ -94,6 +93,7 @@ public class GameBoard extends Game {
 
             }
         });
+        //this has to be run, start will not work
         t.run();
     }
 
