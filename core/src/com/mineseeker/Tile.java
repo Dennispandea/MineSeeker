@@ -25,19 +25,21 @@ public class Tile {
 
     public Tile(float height, float width, float x, float y, Texture tex, OrthographicCamera camera) {
         tile = new Rectangle(x, y, width, height);
+
         overlayTex = new Texture("DefaultTile.PNG");
         revealedTex = tex;
         testSprite = new Sprite(overlayTex);
         tileSprite = new SpriteBatch();
-        testSprite.setOriginBasedPosition(tile.getX(), tile.getY());
-        testSprite.setOrigin(TEX_SIZE, TEX_SIZE);
+        testSprite.setPosition(tile.getX(),tile.getY());
+        testSprite.setOrigin(0, 0);
         tileSprite.setProjectionMatrix(camera.combined);
         testSprite.flip(false, true);
         this.camera=camera;
     }
 
-    private void debug() {
-
+    public void debugTile() {
+        System.out.println("Rectangle X,Y "+tile.getX()+" "+tile.getY());
+        System.out.println("Sprite X,Y "+testSprite.getX()+" "+testSprite.getY());
     }
 
     public void draw() {
@@ -60,13 +62,14 @@ public class Tile {
     }
 
     public void checkClicked() {
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) &&
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) &&
                 (Gdx.input.getX() >= tile.getX() &&
                         Gdx.input.getX() <= tile.getX() + tile.getWidth()
                         && Gdx.input.getY() >= tile.getY() &&
                         Gdx.input.getY() <= tile.getY() + tile.getHeight())
         ) {
             revealed = true;
+            debugTile();
         }
         if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
             revealed = false;

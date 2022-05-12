@@ -29,7 +29,7 @@ public class MineSeeker extends ApplicationAdapter {
         batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
         //tileTest = new Tile(64, 64, 0, 0, new Texture("BombTile.PNG"), camera);
-        gameBoard = new GameBoard(16, 16, 5, camera); //size 10, 10 works perfectly
+        gameBoard = new GameBoard(25, 25, 5, camera);
         gameBoard.create();
 
     }
