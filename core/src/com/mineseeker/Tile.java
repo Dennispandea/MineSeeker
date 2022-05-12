@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.mineseeker.MineSeeker;
+
+import static com.mineseeker.MineSeeker.scoreboard;
 
 public class Tile {
     private static int TEX_SIZE = 128;
@@ -87,8 +90,21 @@ public class Tile {
                 (mouseX >= tileX &&
                         mouseX <= tileX + tile.getWidth() &&
                         mouseY >= tileY &&
-                        mouseY <= tileY + tile.getHeight()))
-            flagged = !flagged;
+                        mouseY <= tileY + tile.getHeight())) {
+            flagged = !flagged; //todo: no infinite flags
+
+            if (flagged) {
+                scoreboard.addUsedFlag();
+                if (isBomb)
+                    scoreboard.addFlaggedBomb();
+            }
+
+            if (!flagged){
+                scoreboard.removeUsedFlag();
+                if (!isBomb)
+                    scoreboard.removeFlaggedBomb();
+            }
+        }
     }
 
     public void setBomb(boolean bomb) {

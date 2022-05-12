@@ -14,10 +14,14 @@ public class MineSeeker extends ApplicationAdapter {
 //    Texture img;
     Tile tileTest;
     GameBoard gameBoard;
-    BitmapFont font;
+    BitmapFont debugFont;
+    BitmapFont flagsRemainingFont;
     SpriteBatch batch;
+
+    public static Scoreboard scoreboard = new Scoreboard(0, 0);
     private OrthographicCamera camera;
 
+    private static int TOTAL_MINES = 20;
 
     @Override
     public void create() {
@@ -25,11 +29,13 @@ public class MineSeeker extends ApplicationAdapter {
         //img = new Texture("badlogic.jpg");
         camera = new OrthographicCamera(WIDTH, HEIGHT);
         camera.setToOrtho(true, WIDTH, HEIGHT);
-        font = new BitmapFont(true);
+        debugFont = new BitmapFont(true);
+        flagsRemainingFont = new BitmapFont(true);
         batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
         //tileTest = new Tile(64, 64, 0, 0, new Texture("BombTile.PNG"), camera);
-        gameBoard = new GameBoard(12, 12, 20, camera);
+        gameBoard = new GameBoard(12, 12, TOTAL_MINES, camera);
+
         gameBoard.create();
 
     }
@@ -45,7 +51,9 @@ public class MineSeeker extends ApplicationAdapter {
 
         batch.begin();
         gameBoard.render();
-        font.draw(batch, Gdx.input.getX() + " " + Gdx.input.getY(), 64, HEIGHT-64);
+        debugFont.draw(batch, Gdx.input.getX() + " " + Gdx.input.getY(), 64, HEIGHT-64);
+        flagsRemainingFont.draw(batch, Integer.toString(TOTAL_MINES - scoreboard.getUsedFlags()), 80, HEIGHT-80);
+
         batch.end();
 //        batch.end();
     }
@@ -54,5 +62,9 @@ public class MineSeeker extends ApplicationAdapter {
     public void dispose() {
 //        batch.dispose();
 //        img.dispose();
+    }
+
+    public int getTotalMines() {
+        return TOTAL_MINES;
     }
 }
