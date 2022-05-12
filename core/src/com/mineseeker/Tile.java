@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Tile {
-    private static int TEX_SIZE = 128;
+    private static final int TEX_SIZE = 128;
     private boolean flagged = false;
     private boolean revealed;
     private boolean isBomb;
@@ -71,7 +71,7 @@ public class Tile {
         float tileX = tile.getX();
         float tileY = tile.getY();
 
-        if (flagged == false && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) &&
+        if (!flagged && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) &&
                 (mouseX >= tileX &&
                         mouseX <= tileX + tile.getWidth() &&
                         mouseY >= tileY &&
