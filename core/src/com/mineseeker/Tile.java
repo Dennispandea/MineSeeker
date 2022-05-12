@@ -18,6 +18,7 @@ public class Tile {
     private int bombsAroundCount;
     OrthographicCamera camera;
     Texture overlayTex;
+    Texture flaggedTex;
     Texture revealedTex;
     private SpriteBatch tileSprite;
     private Rectangle tile;
@@ -27,6 +28,7 @@ public class Tile {
         tile = new Rectangle(x, y, width, height);
 
         overlayTex = new Texture("DefaultTile.PNG");
+        flaggedTex = new Texture("FlagTile.PNG");
         revealedTex = tex;
         testSprite = new Sprite(overlayTex);
         tileSprite = new SpriteBatch();
@@ -52,7 +54,10 @@ public class Tile {
         testSprite.draw(tileSprite);
         if (revealed) {
             testSprite.setTexture(revealedTex);
-        } else
+        } else if (flagged) {
+            testSprite.setTexture(flaggedTex);
+        }
+        else
             testSprite.setTexture(overlayTex);
         //tileSprite.draw(overlayTex, tile.x, tile.y);
 
@@ -71,8 +76,14 @@ public class Tile {
             revealed = true;
             debugTile();
         }
-        if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
-            revealed = false;
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT) &&
+                (Gdx.input.getX() >= tile.getX() &&
+                        Gdx.input.getX() <= tile.getX() + tile.getWidth()
+                        && Gdx.input.getY() >= tile.getY() &&
+                        Gdx.input.getY() <= tile.getY() + tile.getHeight())
+        ) {
+            flagged = true;
+        }
     }
 
     public float getHeight() {
@@ -83,4 +94,7 @@ public class Tile {
         return tile.getWidth();
     }
 
+//    public boolean getIsBomb() {
+//        return tile.isBomb;
+//    }
 }
