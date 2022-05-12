@@ -71,17 +71,17 @@ public class Tile {
         float tileX = tile.getX();
         float tileY = tile.getY();
 
-        if (!flagged && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) &&
-                (mouseX >= tileX &&
-                        mouseX <= tileX + tile.getWidth() &&
-                        mouseY >= tileY &&
-                        mouseY <= tileY + tile.getHeight())) {
-            revealed = true;
-            if (isBomb())
-                setRevealedTex(new Texture("BombTileExploded.PNG"));
-
-            debugTile();
-        }
+//        if (!flagged && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) &&
+//                (mouseX >= tileX &&
+//                        mouseX <= tileX + tile.getWidth() &&
+//                        mouseY >= tileY &&
+//                        mouseY <= tileY + tile.getHeight())) {
+//            revealed = true;
+//            if (isBomb())
+//                setRevealedTex(new Texture("BombTileExploded.PNG"));
+//
+//            debugTile();
+//        }
 
         if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT) &&
                 (mouseX >= tileX &&
@@ -103,8 +103,13 @@ public class Tile {
     public void revealIfBomb() {
         if (isBomb) revealed = true;
     }
-    public void reveal(){
-        revealed=true;
+
+    public void reveal() {
+        revealed = true;
+    }
+
+    public boolean isRevealed() {
+        return revealed;
     }
 
     public int getBombsAroundCount() {
@@ -153,12 +158,24 @@ public class Tile {
         this.revealedTex = revealedTex;
     }
 
+    public boolean isFlagged() {
+        return flagged;
+    }
+
     public float getHeight() {
         return tile.getHeight();
     }
 
     public float getWidth() {
         return tile.getWidth();
+    }
+
+    public float getX() {
+        return tile.getX();
+    }
+
+    public float getY() {
+        return tile.getY();
     }
 
 }
