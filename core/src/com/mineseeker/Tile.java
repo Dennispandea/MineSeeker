@@ -71,17 +71,17 @@ public class Tile {
         float tileX = tile.getX();
         float tileY = tile.getY();
 
-//        if (!flagged && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) &&
-//                (mouseX >= tileX &&
-//                        mouseX <= tileX + tile.getWidth() &&
-//                        mouseY >= tileY &&
-//                        mouseY <= tileY + tile.getHeight())) {
-//            revealed = true;
-//            if (isBomb())
-//                setRevealedTex(new Texture("BombTileExploded.PNG"));
-//
-//            debugTile();
-//        }
+        if (!flagged && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) &&
+                (mouseX >= tileX &&
+                        mouseX <= tileX + tile.getWidth() &&
+                        mouseY >= tileY &&
+                        mouseY <= tileY + tile.getHeight())) {
+            revealed = true;
+            if (isBomb())
+                setRevealedTex(new Texture("BombTileExploded.PNG"));
+
+            debugTile();
+        }
 
         if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT) &&
                 (mouseX >= tileX &&
