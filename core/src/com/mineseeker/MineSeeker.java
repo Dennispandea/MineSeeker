@@ -6,7 +6,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.text.DecimalFormat;
@@ -51,8 +50,6 @@ public class MineSeeker extends ApplicationAdapter {
         font.setColor(1, 0, 0, 1);
         batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
-
-
     }
 
     @Override

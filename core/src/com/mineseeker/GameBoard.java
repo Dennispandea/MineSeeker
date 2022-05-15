@@ -112,91 +112,9 @@ public class GameBoard extends Game {
             for (int j = 0; j < height; j++) {
                 tiles[i][j].draw();
                 revealAllBombs(i, j);
-
-                int mouseX = Gdx.input.getX();
-                int mouseY = Gdx.input.getY();
-
-                float tileX = tiles[i][j].getX();
-                float tileY = tiles[i][j].getY();
-
-                if (!tiles[i][j].isFlagged() && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) &&
-                        (mouseX >= tileX &&
-                                mouseX <= tileX + tiles[i][j].getWidth() &&
-                                mouseY >= tileY &&
-                                mouseY <= tileY + tiles[i][j].getHeight())) {
-
-                    final int finalJ = j;
-                    final int finalI = i;
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            DFS(finalI, finalJ);
-                        }
-                    }).run();
-                    if (tiles[i][j].isBomb())
-                        tiles[i][j].setRevealedTex(new Texture("BombTileExploded.PNG"));
-
-                    tiles[i][j].debugTile();
-                }
             }
         }
         super.render();
     }
 
-    public void DFS(int i, int j) { //Depth First Search
-        if (tiles[i][j].getBombsAroundCount() == 0 || !tiles[i][j].isRevealed()) {
-            if (i > 0) {
-                if (!tiles[i - 1][j].isRevealed() && !tiles[i - 1][j].isBomb()) {
-                    tiles[i - 1][j].reveal();
-                    DFS(i - 1, j);
-                }
-                if (j < height - 1) {
-                    if (!tiles[i - 1][j + 1].isRevealed() && !tiles[i - 1][j + 1].isBomb()) {
-                        tiles[i - 1][j + 1].reveal();
-                        DFS(i - 1, j + 1);
-                    }
-                }
-            }
-            if (j > 0) {
-                if (!tiles[i][j - 1].isRevealed() && !tiles[i][j - 1].isBomb()) {
-                    if (i < width - 1) {
-                        if (!tiles[i + 1][j - 1].isRevealed() && !tiles[i + 1][j - 1].isBomb()) {
-                            tiles[i + 1][j - 1].reveal();
-                            DFS(i + 1, j - 1);
-                        }
-                    }
-                }
-            }
-            if (j > 0 && i > 0) {
-                if (!tiles[i - 1][j - 1].isRevealed() && !tiles[i - 1][j - 1].isBomb()) {
-                    tiles[i - 1][j - 1].reveal();
-                    DFS(i - 1, j - 1);
-                }
-            }
-
-            if (i < width - 1) {
-                if (!tiles[i + 1][j].isRevealed() && !tiles[i + 1][j].isBomb()) {
-                    tiles[i + 1][j].reveal();
-                    DFS(i + 1, j);
-                }
-            }
-
-            if (j < height - 1) {
-                if (!tiles[i][j + 1].isRevealed() && !tiles[i][j + 1].isBomb()) {
-                    tiles[i][j + 1].reveal();
-                    DFS(i, j + 1);
-                }
-            }
-
-            if (i < width - 1 && j < height - 1) {
-                if (!tiles[i + 1][j + 1].isRevealed() && !tiles[i + 1][j + 1].isBomb()) {
-                    tiles[i + 1][j + 1].reveal();
-                    DFS(i + 1, j + 1);
-                }
-            }
-        }
-
-    }
 }
-
-
