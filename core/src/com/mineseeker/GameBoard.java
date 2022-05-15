@@ -45,7 +45,7 @@ public class GameBoard extends Game {
             public void run() { //the minefield should be created in 3 steps, create the empty field, add bombs, calculate bombs around every tile
                 for (int i = 0; i < width; i++) {
                     for (int j = 0; j < height; j++) {
-                        tiles[i][j] = new Tile(tHeight, tWidth, i * tWidth, j * tHeight, new Texture("EmptyTile.PNG"), camera);
+                        tiles[i][j] = new Tile(tHeight, tWidth, x + (i * tWidth), y + (j * tHeight), new Texture("EmptyTile.PNG"), camera);
                     }
                 }
                 while (minesLeft > 0) { //keep running until all the bombs are set
@@ -131,11 +131,8 @@ public class GameBoard extends Game {
                         @Override
                         public void run() {
                             DFS(finalI, finalJ);
-                            firstIteration=true;
                         }
                     }).run();
-
-
                     if (tiles[i][j].isBomb())
                         tiles[i][j].setRevealedTex(new Texture("BombTileExploded.PNG"));
 
@@ -145,23 +142,23 @@ public class GameBoard extends Game {
         }
         super.render();
     }
-    boolean firstIteration =true;
-    public void DFS(int i, int j) {
+
+    public void DFS(int i, int j) { //Depth First Search
         if (tiles[i][j].getBombsAroundCount() == 0 || !tiles[i][j].isRevealed()) {
             if (i > 0) {
-                if (!tiles[i-1][j].isRevealed() &&!tiles[i - 1][j].isBomb()) {
+                if (!tiles[i - 1][j].isRevealed() && !tiles[i - 1][j].isBomb()) {
                     tiles[i - 1][j].reveal();
                     DFS(i - 1, j);
                 }
                 if (j < height - 1) {
-                    if (!tiles[i-1][j+1].isRevealed() &&!tiles[i - 1][j + 1].isBomb()) {
+                    if (!tiles[i - 1][j + 1].isRevealed() && !tiles[i - 1][j + 1].isBomb()) {
                         tiles[i - 1][j + 1].reveal();
                         DFS(i - 1, j + 1);
                     }
                 }
             }
             if (j > 0) {
-                if (!tiles[i][j-1].isRevealed() &&!tiles[i][j - 1].isBomb()) {
+                if (!tiles[i][j - 1].isRevealed() && !tiles[i][j - 1].isBomb()) {
                     if (i < width - 1) {
                         if (!tiles[i + 1][j - 1].isRevealed() && !tiles[i + 1][j - 1].isBomb()) {
                             tiles[i + 1][j - 1].reveal();
@@ -171,28 +168,28 @@ public class GameBoard extends Game {
                 }
             }
             if (j > 0 && i > 0) {
-                if (!tiles[i-1][j-1].isRevealed() &&!tiles[i - 1][j - 1].isBomb()) {
+                if (!tiles[i - 1][j - 1].isRevealed() && !tiles[i - 1][j - 1].isBomb()) {
                     tiles[i - 1][j - 1].reveal();
                     DFS(i - 1, j - 1);
                 }
             }
 
             if (i < width - 1) {
-                if (!tiles[i+1][j].isRevealed() &&!tiles[i + 1][j].isBomb()) {
+                if (!tiles[i + 1][j].isRevealed() && !tiles[i + 1][j].isBomb()) {
                     tiles[i + 1][j].reveal();
                     DFS(i + 1, j);
                 }
             }
 
             if (j < height - 1) {
-                if (!tiles[i][j+1].isRevealed() &&!tiles[i][j + 1].isBomb()) {
+                if (!tiles[i][j + 1].isRevealed() && !tiles[i][j + 1].isBomb()) {
                     tiles[i][j + 1].reveal();
                     DFS(i, j + 1);
                 }
             }
 
             if (i < width - 1 && j < height - 1) {
-                if (!tiles[i+1][j+1].isRevealed() &&!tiles[i + 1][j + 1].isBomb()) {
+                if (!tiles[i + 1][j + 1].isRevealed() && !tiles[i + 1][j + 1].isBomb()) {
                     tiles[i + 1][j + 1].reveal();
                     DFS(i + 1, j + 1);
                 }
