@@ -131,7 +131,6 @@ public class GameBoard extends Game {
                         @Override
                         public void run() {
                             DFS(finalI, finalJ);
-                            firstIteration = true;
                         }
                     }).run();
 
@@ -146,10 +145,7 @@ public class GameBoard extends Game {
         super.render();
     }
 
-    boolean firstIteration = true;
-
     public void DFS(int i, int j) {
-
         if (i < width - 1 && j < height - 1 && j > 0 && i > 0) {
             checkDFS(i - 1, j);
             checkDFS(i - 1, j + 1);
@@ -164,10 +160,12 @@ public class GameBoard extends Game {
     private void checkDFS(int i, int j) {
         if (!tiles[i][j].isRevealed() && !tiles[i][j].isBomb()) {
             tiles[i][j].reveal();
-            if (tiles[i][j].getBombsAroundCount() == 0)
+            if (tiles[i][j].getBombsAroundCount() == 0) {
                 DFS(i, j);
+            }
         }
     }
+
 }
 
 
