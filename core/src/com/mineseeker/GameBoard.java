@@ -131,7 +131,7 @@ public class GameBoard extends Game {
                         @Override
                         public void run() {
                             DFS(finalI, finalJ);
-                            firstIteration=true;
+                            firstIteration = true;
                         }
                     }).run();
 
@@ -145,61 +145,30 @@ public class GameBoard extends Game {
         }
         super.render();
     }
-    boolean firstIteration =true;
+
+    boolean firstIteration = true;
+
     public void DFS(int i, int j) {
-        if (tiles[i][j].getBombsAroundCount() == 0 || !tiles[i][j].isRevealed()) {
-            if (i > 0) {
-                if (!tiles[i-1][j].isRevealed() &&!tiles[i - 1][j].isBomb()) {
-                    tiles[i - 1][j].reveal();
-                    DFS(i - 1, j);
-                }
-                if (j < height - 1) {
-                    if (!tiles[i-1][j+1].isRevealed() &&!tiles[i - 1][j + 1].isBomb()) {
-                        tiles[i - 1][j + 1].reveal();
-                        DFS(i - 1, j + 1);
-                    }
-                }
-            }
-            if (j > 0) {
-                if (!tiles[i][j-1].isRevealed() &&!tiles[i][j - 1].isBomb()) {
-                    if (i < width - 1) {
-                        if (!tiles[i + 1][j - 1].isRevealed() && !tiles[i + 1][j - 1].isBomb()) {
-                            tiles[i + 1][j - 1].reveal();
-                            DFS(i + 1, j - 1);
-                        }
-                    }
-                }
-            }
-            if (j > 0 && i > 0) {
-                if (!tiles[i-1][j-1].isRevealed() &&!tiles[i - 1][j - 1].isBomb()) {
-                    tiles[i - 1][j - 1].reveal();
-                    DFS(i - 1, j - 1);
-                }
-            }
 
-            if (i < width - 1) {
-                if (!tiles[i+1][j].isRevealed() &&!tiles[i + 1][j].isBomb()) {
-                    tiles[i + 1][j].reveal();
-                    DFS(i + 1, j);
-                }
-            }
-
-            if (j < height - 1) {
-                if (!tiles[i][j+1].isRevealed() &&!tiles[i][j + 1].isBomb()) {
-                    tiles[i][j + 1].reveal();
-                    DFS(i, j + 1);
-                }
-            }
-
-            if (i < width - 1 && j < height - 1) {
-                if (!tiles[i+1][j+1].isRevealed() &&!tiles[i + 1][j + 1].isBomb()) {
-                    tiles[i + 1][j + 1].reveal();
-                    DFS(i + 1, j + 1);
-                }
-            }
+        if (i < width - 1 && j < height - 1 && j > 0 && i > 0) {
+            checkDFS(i - 1, j);
+            checkDFS(i - 1, j + 1);
+            checkDFS(i + 1, j);
+            checkDFS(i + 1, j - 1);
+            checkDFS(i, j + 1);
+            checkDFS(i - 1, j - 1);
+            checkDFS(i + 1, j + 1);
         }
+    }
 
+    private void checkDFS(int i, int j) {
+        if (!tiles[i][j].isRevealed() && !tiles[i][j].isBomb()) {
+            tiles[i][j].reveal();
+            if (tiles[i][j].getBombsAroundCount() == 0)
+                DFS(i, j);
+        }
     }
 }
+
 
 
