@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.Timer;
 
 public class Tile {
     private static final int TEX_SIZE = 128;
@@ -19,6 +21,7 @@ public class Tile {
     Texture flaggedTex;
     Texture revealedTex;
     Texture bombTex;
+    long time1,time2;
     private SpriteBatch tileSprite;
     private Rectangle tile;
     Sprite testSprite;
@@ -45,6 +48,8 @@ public class Tile {
     }
 
     public void draw() {
+        time1 = TimeUtils.millis();
+
         testSprite.setScale(tile.width / TEX_SIZE);
 //        testSprite.setX(tile.x);
 //        testSprite.setY(tile.y);
@@ -61,6 +66,7 @@ public class Tile {
 
         tileSprite.end();
         checkClicked();
+        time2 = TimeUtils.millis();
     }
 
 
@@ -178,4 +184,7 @@ public class Tile {
         return tile.getY();
     }
 
+    public int getDrawTime() {
+        return (int) (time2-time1);
+    }
 }

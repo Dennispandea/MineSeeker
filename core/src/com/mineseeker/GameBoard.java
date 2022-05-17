@@ -117,4 +117,13 @@ public class GameBoard extends Game {
         super.render();
     }
 
+    public int getDrawTime() {
+        int totalTime=0;
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                totalTime += tiles[i][j].getDrawTime();
+            }
+        }
+        return totalTime;
+    }
 }

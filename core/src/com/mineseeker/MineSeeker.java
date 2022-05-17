@@ -81,6 +81,11 @@ public class MineSeeker extends ApplicationAdapter {
         debugString.append(Gdx.graphics.getFramesPerSecond());
         debugString.append('\n');
 
+        debugString.append("totalDrawTime: ");
+        debugString.append(gameBoard.getDrawTime());
+        debugString.append("ms");
+        debugString.append('\n');
+
         debugString.append("Memory usage: ");
         debugString.append(util.memUsageCalc(Gdx.app.getJavaHeap()));
         debugString.append('\n');
@@ -105,7 +110,5 @@ public class MineSeeker extends ApplicationAdapter {
 
     @Override
     public void dispose() {
-//        batch.dispose();
-//        img.dispose();
     }
 }
