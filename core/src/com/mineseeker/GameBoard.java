@@ -38,7 +38,6 @@ public class GameBoard extends Game {
     }
 
 
-
     @Override
     public void create() {
         Thread t = new Thread(new Runnable() {
@@ -46,7 +45,7 @@ public class GameBoard extends Game {
             public void run() { //the minefield should be created in 3 steps, create the empty field, add bombs, calculate bombs around every tile
                 for (int i = 0; i < width; i++) {
                     for (int j = 0; j < height; j++) {
-                        tiles[i][j] = new Tile(tHeight, tWidth, i * tWidth, j * tHeight, new Texture("EmptyTile.PNG"), camera);
+                        tiles[i][j] = new Tile(tHeight, tWidth, x + (i * tWidth), y + (j * tHeight), new Texture("EmptyTile.PNG"), camera);
                     }
                 }
                 while (minesLeft > 0) { //keep running until all the bombs are set
@@ -118,4 +117,13 @@ public class GameBoard extends Game {
         super.render();
     }
 
+    public int getDrawTime() {
+        int totalTime=0;
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                totalTime += tiles[i][j].getDrawTime();
+            }
+        }
+        return totalTime;
+    }
 }
