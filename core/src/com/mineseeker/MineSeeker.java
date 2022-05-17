@@ -3,11 +3,13 @@ package com.mineseeker;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import java.awt.*;
 import java.text.DecimalFormat;
 
 public class MineSeeker extends ApplicationAdapter {
@@ -26,9 +28,6 @@ public class MineSeeker extends ApplicationAdapter {
 
     @Override
     public void create() {
-        //batch = new SpriteBatch();
-        //img = new Texture("badlogic.jpg");
-        //tileTest = new Tile(64, 64, 0, 0, new Texture("BombTile.PNG"), camera);
         cameraInit();
         debugInit();
         gameboardInit();
@@ -80,7 +79,9 @@ public class MineSeeker extends ApplicationAdapter {
 
         debugString.append("FPS: ");
         debugString.append(Gdx.graphics.getFramesPerSecond());
-        debugString.append(" Memory usage: ");
+        debugString.append('\n');
+
+        debugString.append("Memory usage: ");
         debugString.append(util.memUsageCalc(Gdx.app.getJavaHeap()));
         debugString.append('\n');
 
