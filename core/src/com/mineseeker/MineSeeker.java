@@ -60,7 +60,7 @@ public class MineSeeker extends ApplicationAdapter {
     @Override
     public void render() {
         ScreenUtils.clear(.5f, .5f, .5f, 1);
-        int availableFlags = TOTAL_MINES - scoreboard.getUsedFlags();
+        String availableFlags = Integer.toString(TOTAL_MINES - scoreboard.getUsedFlags());
         camera.update();
         //tileTest.draw();
 //      batch.begin();
@@ -70,7 +70,7 @@ public class MineSeeker extends ApplicationAdapter {
         batch.begin();
         gameBoard.render();
         debugModeCheck();
-        flagsRemainingFont.draw(batch, Integer.toString(availableFlags), 80, 10);
+        flagsRemainingFont.draw(batch, availableFlags, 80, 10);
 
         batch.end();
     }
