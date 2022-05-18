@@ -21,7 +21,7 @@ public class MineSeeker extends ApplicationAdapter {
     public static Scoreboard scoreboard = new Scoreboard(0, 0);
     private OrthographicCamera camera;
 
-    private static int TOTAL_MINES = 20;
+    public static int TOTAL_MINES = 20;
 
     @Override
     public void create() {
@@ -64,7 +64,4 @@ public class MineSeeker extends ApplicationAdapter {
 //        img.dispose();
     }
 
-    public int getTotalMines() {
-        return TOTAL_MINES;
-    }
 }

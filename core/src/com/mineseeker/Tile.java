@@ -91,18 +91,23 @@ public class Tile {
                         mouseX <= tileX + tile.getWidth() &&
                         mouseY >= tileY &&
                         mouseY <= tileY + tile.getHeight())) {
-            flagged = !flagged; //todo: no infinite flags
 
             if (flagged) {
-                scoreboard.addUsedFlag();
+                scoreboard.removeUsedFlag();
+                flagged = false;
+
                 if (isBomb)
-                    scoreboard.addFlaggedBomb();
+                    scoreboard.removeFlaggedBomb();
             }
 
             if (!flagged){
-                scoreboard.removeUsedFlag();
-                if (!isBomb)
-                    scoreboard.removeFlaggedBomb();
+                if (scoreboard.getUsedFlags() < MineSeeker.TOTAL_MINES) {
+                    scoreboard.addUsedFlag();
+                    flagged = true;
+
+                    if (isBomb)
+                        scoreboard.addFlaggedBomb();
+                }
             }
         }
     }
