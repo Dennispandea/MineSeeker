@@ -17,6 +17,7 @@ public class DesktopLauncher {
         config.useVsync(true);
         config.setForegroundFPS(60);
         config.setTitle("MineSeeker");
+        config.setResizable(false);
         new Lwjgl3Application(new MineSeeker(), config);
     }
 }
