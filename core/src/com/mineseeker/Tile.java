@@ -100,20 +100,15 @@ public class Tile {
 
             if (flagged) {
                 scoreboard.removeUsedFlag();
-                System.out.println(flagged);
                 flagged = false;
-                System.out.println(flagged);
 
                 if (isBomb)
                     scoreboard.removeFlaggedBomb();
             }
-
              else if (!flagged){
                 if (scoreboard.getUsedFlags() < MineSeeker.TOTAL_MINES) {
                     scoreboard.addUsedFlag();
-                    System.out.println(flagged);
                     flagged = true;
-                    System.out.println(flagged);
 
                     if (isBomb)
                         scoreboard.addFlaggedBomb();
