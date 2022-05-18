@@ -57,6 +57,7 @@ public class GameBoard extends Game {
                             }
                             if (minesLeft == 0) break;
                         }
+                        if (minesLeft == 0) break;
                     }
                 }
                 for (int i = 0; i < width; i++) { //check all bombs
@@ -118,7 +119,7 @@ public class GameBoard extends Game {
     }
 
     public int getDrawTime() {
-        int totalTime=0;
+        int totalTime = 0;
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 totalTime += tiles[i][j].getDrawTime();
