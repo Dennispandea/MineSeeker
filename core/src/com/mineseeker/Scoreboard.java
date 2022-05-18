@@ -21,7 +21,7 @@ public class Scoreboard {
 
     public void CheckForWin() {
         if (flaggedBombs == MineSeeker.TOTAL_MINES){
-            //todo: Win idk
+            MineSeeker.gameIsWon = true;
         }
     }
 }

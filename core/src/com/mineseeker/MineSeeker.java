@@ -21,14 +21,17 @@ public class MineSeeker extends ApplicationAdapter {
     GameBoard gameBoard;
     BitmapFont debugFont;
     BitmapFont flagsRemainingFont;
+    BitmapFont winMesageFont;
     SpriteBatch batch;
 
     public static Scoreboard scoreboard = new Scoreboard(0, 0);
     StringBuilder debugString;
     private OrthographicCamera camera;
     boolean debugMode = false;
+    public static boolean gameIsWon = false;
 
-    public static int TOTAL_MINES = 20;
+    public static int TOTAL_MINES = 1;
+
 
     @Override
     public void create() {
@@ -51,6 +54,7 @@ public class MineSeeker extends ApplicationAdapter {
         debugFont = new BitmapFont(true);
         debugFont.setColor(1, 0, 0, 1);
 
+        winMesageFont = new BitmapFont(true);
         flagsRemainingFont = new BitmapFont(true);
         batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
@@ -62,19 +66,18 @@ public class MineSeeker extends ApplicationAdapter {
         ScreenUtils.clear(.5f, .5f, .5f, 1);
         String availableFlags = Integer.toString(TOTAL_MINES - scoreboard.getUsedFlags());
         camera.update();
-        //tileTest.draw();
-//      batch.begin();
-//      batch.draw(img, 0, 0);
-        //draw background, objects, etc.
 
         batch.begin();
-        gameBoard.render();
-        debugModeCheck();
-        flagsRemainingFont.draw(batch, availableFlags, 80, 10);
+            gameBoard.render();
+            debugModeCheck();
+
+            if (gameIsWon)
+                winMesageFont.draw(batch, "You Win!", 80, 10);
+            else
+                flagsRemainingFont.draw(batch, availableFlags, 80, 10);
 
         batch.end();
     }
-
 
     public String debugUpdate() {
         debugString = new StringBuilder();
@@ -115,6 +118,7 @@ public class MineSeeker extends ApplicationAdapter {
             System.out.println("Toggled debug");
         }
     }
+
 
     @Override
     public void dispose() {

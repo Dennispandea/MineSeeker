@@ -91,8 +91,7 @@ public class Tile {
 
             debugTile();
         }
-
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT) &&
+        else if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT) &&
                 (mouseX >= tileX &&
                         mouseX <= tileX + tile.getWidth() &&
                         mouseY >= tileY &&
@@ -105,7 +104,7 @@ public class Tile {
                 if (isBomb)
                     scoreboard.removeFlaggedBomb();
             }
-             else if (!flagged){
+            else if (!flagged){
                 if (scoreboard.getUsedFlags() < MineSeeker.TOTAL_MINES) {
                     scoreboard.addUsedFlag();
                     flagged = true;
@@ -115,6 +114,8 @@ public class Tile {
                 }
             }
         }
+
+        scoreboard.CheckForWin();
     }
 
     public void setBomb(boolean bomb) {
