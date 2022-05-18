@@ -7,12 +7,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.mineseeker.MineSeeker;
 
 import static com.mineseeker.MineSeeker.scoreboard;
 
 public class Tile {
-    private static int TEX_SIZE = 128;
+    private static final int TEX_SIZE = 128;
     private boolean flagged = false;
     private boolean revealed;
     private boolean isBomb;
@@ -22,6 +24,7 @@ public class Tile {
     Texture flaggedTex;
     Texture revealedTex;
     Texture bombTex;
+    long time1,time2;
     private SpriteBatch tileSprite;
     private Rectangle tile;
     Sprite testSprite;
@@ -48,6 +51,8 @@ public class Tile {
     }
 
     public void draw() {
+        time1 = TimeUtils.millis();
+
         testSprite.setScale(tile.width / TEX_SIZE);
 //        testSprite.setX(tile.x);
 //        testSprite.setY(tile.y);
@@ -64,6 +69,7 @@ public class Tile {
 
         tileSprite.end();
         checkClicked();
+        time2 = TimeUtils.millis();
     }
 
 
@@ -74,7 +80,7 @@ public class Tile {
         float tileX = tile.getX();
         float tileY = tile.getY();
 
-        if (flagged == false && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) &&
+        if (!flagged && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) &&
                 (mouseX >= tileX &&
                         mouseX <= tileX + tile.getWidth() &&
                         mouseY >= tileY &&
@@ -125,6 +131,14 @@ public class Tile {
         if (isBomb) revealed = true;
     }
 
+    public void reveal() {
+        revealed = true;
+    }
+
+    public boolean isRevealed() {
+        return revealed;
+    }
+
     public int getBombsAroundCount() {
         return bombsAroundCount;
     }
@@ -171,6 +185,10 @@ public class Tile {
         this.revealedTex = revealedTex;
     }
 
+    public boolean isFlagged() {
+        return flagged;
+    }
+
     public float getHeight() {
         return tile.getHeight();
     }
@@ -179,4 +197,15 @@ public class Tile {
         return tile.getWidth();
     }
 
+    public float getX() {
+        return tile.getX();
+    }
+
+    public float getY() {
+        return tile.getY();
+    }
+
+    public int getDrawTime() {
+        return (int) (time2-time1);
+    }
 }
