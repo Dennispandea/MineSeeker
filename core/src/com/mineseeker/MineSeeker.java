@@ -35,7 +35,6 @@ public class MineSeeker extends ApplicationAdapter {
         cameraInit();
         debugInit();
         gameboardInit();
-
     }
 
     private void cameraInit() {
@@ -44,26 +43,24 @@ public class MineSeeker extends ApplicationAdapter {
     }
 
     private void gameboardInit() {
-        gameBoard = new GameBoard(16, 16, 40, camera);
+        gameBoard = new GameBoard(16, 16, TOTAL_MINES, camera);
         gameBoard.create();
     }
 
     private void debugInit() {
-        debugFont.setColor(1, 0, 0, 1);
         debugFont = new BitmapFont(true);
+        debugFont.setColor(1, 0, 0, 1);
+
         flagsRemainingFont = new BitmapFont(true);
         batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
         //tileTest = new Tile(64, 64, 0, 0, new Texture("BombTile.PNG"), camera);
-        gameBoard = new GameBoard(12, 12, TOTAL_MINES, camera);
-
-        gameBoard.create();
-
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(.5f, .5f, .5f, 1);
+        int availableFlags = TOTAL_MINES - scoreboard.getUsedFlags();
         camera.update();
         //tileTest.draw();
 //      batch.begin();
@@ -73,11 +70,9 @@ public class MineSeeker extends ApplicationAdapter {
         batch.begin();
         gameBoard.render();
         debugModeCheck();
-        debugFont.draw(batch, Gdx.input.getX() + " " + Gdx.input.getY(), 64, HEIGHT-64);
-        flagsRemainingFont.draw(batch, Integer.toString(TOTAL_MINES - scoreboard.getUsedFlags()), 80, HEIGHT-80);
+        flagsRemainingFont.draw(batch, Integer.toString(availableFlags), 80, 10);
 
         batch.end();
-//        batch.end();
     }
 
 
@@ -113,7 +108,7 @@ public class MineSeeker extends ApplicationAdapter {
 
     private void debugModeCheck() {
         if (debugMode) {
-            font.draw(batch, debugUpdate(), 10, 10);
+            debugFont.draw(batch, debugUpdate(), 10, 10);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.F3)) {
             debugMode = !debugMode;

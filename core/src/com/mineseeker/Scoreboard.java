@@ -1,12 +1,10 @@
 package com.mineseeker;
 
 public class Scoreboard {
-    private int totalBombs;
     private int usedFlags;
     private int flaggedBombs;
 
     public Scoreboard(int usedFlags, int flaggedBombs) {
-        totalBombs = MineSeeker.TOTAL_MINES;
         this.usedFlags = usedFlags;
         this.flaggedBombs = flaggedBombs;
     }
@@ -22,7 +20,7 @@ public class Scoreboard {
     public void removeFlaggedBomb() {this.flaggedBombs--;}
 
     public void CheckForWin() {
-        if (flaggedBombs == totalBombs){
+        if (flaggedBombs == MineSeeker.TOTAL_MINES){
             //todo: Win idk
         }
     }
