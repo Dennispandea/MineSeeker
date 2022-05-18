@@ -15,6 +15,7 @@ import java.text.DecimalFormat;
 public class MineSeeker extends ApplicationAdapter {
     public static int WIDTH = 600;
     public static int HEIGHT = 800;
+    int lastDraw=15;
     //    SpriteBatch batch;
 //    Texture img;
     Tile tileTest;
@@ -68,6 +69,7 @@ public class MineSeeker extends ApplicationAdapter {
     }
 
 
+
     public String debugUpdate() {
         debugString = new StringBuilder();
         debugString.append("X:");
@@ -98,9 +100,15 @@ public class MineSeeker extends ApplicationAdapter {
         return debugString.toString();
     }
 
+    String test="";
     private void debugModeCheck() {
         if (debugMode) {
-            font.draw(batch, debugUpdate(), 10, 10);
+            lastDraw++;
+            if (lastDraw > 5){
+               test= debugUpdate();
+                lastDraw=0;
+            }
+            font.draw(batch, test, 10, 10);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.F3)) {
             debugMode = !debugMode;
